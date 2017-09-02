@@ -19,6 +19,10 @@ class Board
     rows.flat_map {|letter| columns.flat_map{|number| letter + number}}
   end
 
+  def space_exists?(space)
+    space_name_arr.include?(space)
+  end
+
   def space_hash
     space_name_arr.reduce({}) {|spaces, name| spaces["#{name}"] = Space.new(name); spaces}
   end
@@ -79,9 +83,13 @@ class Board
     neighbors << west_coordinates(spot)  if west?(spot)
     neighbors
   end
+
+  def get_space(spot)
+    build_game_grid.map do |row|
+      row.find {|space_hash| space_hash[spot]}
+    end.compact[0][spot]
+  end
 end
 
-board = Board.new(4)
-p board.neighbors('C3')
-# p board.row_arr
-# p board.build_game_grid
+# board = Board.new(4)
+# p board.space_exists?('Z3')
