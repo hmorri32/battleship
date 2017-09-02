@@ -109,4 +109,23 @@ class BoardTest < Minitest::Test
     assert_equal expected_C2, four.neighbors('C2')
     assert_equal expected_D2, four.neighbors('D2')
   end
+
+  def test_get_space 
+    assert_equal 'A4', four.get_space('A4').coordinates
+    assert_instance_of Space, four.get_space('A4')
+    
+    assert_equal 'B2', four.get_space('B2').coordinates
+    assert_instance_of Space, four.get_space('B2')
+    
+    assert_equal 'C3', four.get_space('C3').coordinates
+    assert_instance_of Space, four.get_space('C3')
+
+    assert_equal 'D1', four.get_space('D1').coordinates
+    assert_instance_of Space, four.get_space('D1')
+  end
+
+  def test_space_exists
+    refute four.space_exists?('Z4')
+    assert four.space_exists?('A4')
+  end
 end
