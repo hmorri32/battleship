@@ -7,14 +7,14 @@ class Player
     @shot_count = 0
     @ship_arr   = ship_arr
     @ships      = []
-    ship_builder
+    ship_yard
   end
 
   def shoot 
     @shot_count +=1 
   end
 
-  def ship_builder 
+  def ship_yard 
     @ships = @ship_arr.map {|length| Ship.new(length)}
   end
   
