@@ -23,7 +23,6 @@ class PlayerTest < Minitest::Test
   end
 
   def test_total_ship_count 
-    playa.ship_builder
     assert_equal 2, playa.total_ships 
   end
 
