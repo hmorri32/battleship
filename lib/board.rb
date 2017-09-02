@@ -89,7 +89,38 @@ class Board
       row.find {|space_hash| space_hash[spot]}
     end.compact[0][spot]
   end
-end
 
-# board = Board.new(4)
-# p board.space_exists?('Z3')
+  def neighbors?(one, two)
+    neighbors(one).include?(two)
+  end
+  
+  def same_row?(one, two)
+    one[0] == two[0]
+  end
+
+  def same_column?(one, two)
+    one[1] == two[1]
+  end
+
+  def length_horizontally(one, two)
+    return unless same_row?(one, two)
+    spot_1 = one[1].to_i
+    spot_2 = two[1].to_i
+    subtract(spot_1, spot_2)
+  end
+
+  def length_vertically(one, two)
+    return unless same_column?(one, two)
+    spot_1 = rows.index(one[0])
+    spot_2 = rows.index(two[0])
+    subtract(spot_1, spot_2)
+  end
+
+  def subtract(spot_1, spot_2)
+    if spot_1 < spot_2 
+      (spot_2 - spot_1) + 1
+    else
+      (spot_1 - spot_2) + 1
+    end
+  end
+end
