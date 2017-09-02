@@ -77,10 +77,10 @@ class Board
 
   def neighbors(spot)
     neighbors = Array.new 
-    neighbors << north_coordinates(spot) if north?(spot)
-    neighbors << south_coordinates(spot) if south?(spot)
-    neighbors << east_coordinates(spot)  if east?(spot)
-    neighbors << west_coordinates(spot)  if west?(spot)
+    neighbors.push(north_coordinates(spot)) if north?(spot)
+    neighbors.push(south_coordinates(spot)) if south?(spot)
+    neighbors.push(east_coordinates(spot))  if east?(spot)
+    neighbors.push(west_coordinates(spot))  if west?(spot)
     neighbors
   end
 
