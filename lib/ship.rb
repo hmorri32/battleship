@@ -1,13 +1,13 @@
 class Ship
   attr_accessor :length,
                 :damage, 
-                :start,
-                :end
+                :bow,
+                :stern
                 
   def initialize(length)
     @length = length
     @damage = 0 
-    @start  = nil
-    @end    = nil
+    @bow    = nil
+    @stern  = nil
   end
 end
