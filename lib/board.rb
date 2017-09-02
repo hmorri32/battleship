@@ -34,9 +34,54 @@ class Board
       end
     end
   end
+
+  def north?(spot)
+    rows.index(spot[0]) > 0
+  end
+
+  def north_coordinates(spot)
+    letter = rows.index(spot[0]) - 1  
+    number = spot[-1]
+    rows[letter] + number
+  end
+  
+  def south?(spot)
+    rows.index(spot[0]) < @size -1
+  end
+
+  def south_coordinates(spot)
+    letter = rows.index(spot[0]) + 1  
+    number = spot[-1]
+    rows[letter] + number
+  end
+  
+  def east?(spot)
+    spot[-1].to_i > 0 && spot[-1].to_i < @size
+  end
+
+  def east_coordinates(spot)
+    spot[0] + (spot[-1].to_i + 1).to_s
+  end
+
+  def west?(spot)
+    spot[-1].to_i > 1
+  end
+
+  def west_coordinates(spot)
+    spot[0] + (spot[-1].to_i - 1).to_s
+  end
+
+  def neighbors(spot)
+    neighbors = Array.new 
+    neighbors << north_coordinates(spot) if north?(spot)
+    neighbors << south_coordinates(spot) if south?(spot)
+    neighbors << east_coordinates(spot)  if east?(spot)
+    neighbors << west_coordinates(spot)  if west?(spot)
+    neighbors
+  end
 end
 
 board = Board.new(4)
-
+p board.neighbors('C3')
 # p board.row_arr
 # p board.build_game_grid
