@@ -4,21 +4,20 @@ require './lib/player'
 class PlayerTest < Minitest::Test 
   attr_accessor :player, :playa
   def setup
-    @player = Player.new 
-    @playa  = Player.new([2,3])
+    @inter = Player.new([2,3,4])
+    @playa = Player.new([2,3])
   end
 
   def test_existence 
-    assert player
-    assert_instance_of Player, player
+    assert playa
+    assert_instance_of Player, playa
   end
 
   def test_shot_count
-    assert_equal 0, player.shot_count
+    assert_equal 0, playa.shot_count
   end
 
   def test_default_ships 
-    assert_nil player.ship_arr
     assert_equal [2,3], playa.ship_arr
   end
 
@@ -35,8 +34,20 @@ class PlayerTest < Minitest::Test
     assert_equal 1, playa.shot_count
   end
 
+  def test_ships_built_on_instantiation 
+    assert_instance_of Ship, playa.ships[0]
+    assert_instance_of Ship, playa.ships[1]
+  end
+
   def test_playa_can_place_ship 
-    
+    ship1 = playa.ships[0]
+    ship2 = playa.ships[1]
+
+    playa.place_ship(ship1, 'A1', 'A2')
+
+    assert_equal 'A1', ship1.bow
+    assert_equal 'A2', ship1.stern
+
   end
 end
 
