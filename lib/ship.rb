@@ -10,4 +10,9 @@ class Ship
     @bow    = nil
     @stern  = nil
   end
+
+  def place(bow, stern)
+    @bow   = bow
+    @stern = stern
+  end
 end
