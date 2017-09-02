@@ -23,10 +23,10 @@ class ShipTest < Minitest::Test
   end
 
   def test_ship_initialized_start
-    assert_nil cool_boat.start
+    assert_nil cool_boat.bow
   end
 
   def test_ship_initialized_end
-    assert_nil cool_boat.end
+    assert_nil cool_boat.stern
   end
 end
