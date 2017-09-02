@@ -128,4 +128,44 @@ class BoardTest < Minitest::Test
     refute four.space_exists?('Z4')
     assert four.space_exists?('A4')
   end
+
+  def test_neighbor?
+    assert four.neighbors?('A1', 'B1')
+    assert four.neighbors?('A1', 'A2')
+    
+    refute four.neighbors?('A1', 'C2')
+    refute four.neighbors?('B1', 'A2')
+  end
+
+  def test_same_row?
+    assert four.same_row?('A1', 'A2')
+    assert four.same_row?('B1', 'B2')
+
+    refute four.same_row?('A1', 'B2')
+    refute four.same_row?('A1', 'B2')
+    refute four.same_row?('A1', 'B2')
+  end
+
+  def test_same_column? 
+    assert four.same_column?('A1', 'B1')
+    assert four.same_column?('A2', 'B2')
+
+    refute four.same_column?('A1', 'B2')
+    refute four.same_column?('A1', 'B3')
+    refute four.same_column?('A1', 'B4')
+  end
+
+  def test_length_horizontally
+    assert_equal 4, four.length_horizontally('A1', 'A4')
+    assert_equal 3, four.length_horizontally('A1', 'A3')
+    assert_equal 2, four.length_horizontally('A1', 'A2')
+    assert_equal 1, four.length_horizontally('A1', 'A1')
+  end
+
+  def test_length_vertically
+    assert_equal 4, four.length_vertically('A1', 'D1')
+    assert_equal 3, four.length_vertically('A1', 'C1')
+    assert_equal 2, four.length_vertically('A1', 'B1')
+    assert_equal 1, four.length_vertically('A1', 'A1')
+  end
 end
