@@ -2,7 +2,8 @@ require_relative 'require'
 require './lib/player'
 
 class PlayerTest < Minitest::Test 
-  attr_accessor :player, :playa
+  attr_accessor :inter, :playa
+
   def setup
     @inter = Player.new([2,3,4])
     @playa = Player.new([2,3])
@@ -44,10 +45,13 @@ class PlayerTest < Minitest::Test
     ship2 = playa.ships[1]
 
     playa.place_ship(ship1, 'A1', 'A2')
+    playa.place_ship(ship2, 'B1', 'B3')
 
     assert_equal 'A1', ship1.bow
     assert_equal 'A2', ship1.stern
 
+    assert_equal 'B1', ship2.bow
+    assert_equal 'B3', ship2.stern
   end
 end
 
