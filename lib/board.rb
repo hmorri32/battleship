@@ -166,4 +166,12 @@ class Board
       (spot_1 - spot_2) + 1
     end
   end
+
+  def fired_on?(space)
+    get_space(space).fired_on
+  end
+
+  def fire_on(space)
+    get_space(space).fired_on = true
+  end
 end
