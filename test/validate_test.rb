@@ -25,4 +25,21 @@ class ValidateTest < Minitest::Test
     refute valid_space?(@board, 'Z1')
     refute valid_space?(@board, 'suh')
   end
+
+  def test_valid_spaces
+    assert two_valid_spaces?(@board, 'A1', 'A2')
+    assert two_valid_spaces?(@board, 'A1', 'D2')
+
+    refute two_valid_spaces?(@board, 'A1', 'Z2')
+    refute two_valid_spaces?(@board, 'A1', 'M2')
+  end
+
+  def test_small_ship_doesnt_fall_off_map 
+    assert small_ship_stays_on_map?(@board, 'A3', 'A4')
+    assert small_ship_stays_on_map?(@board, 'A4', 'B4')
+    assert small_ship_stays_on_map?(@board, 'C2', 'D2')
+
+    refute small_ship_stays_on_map?(@board, 'A4', 'A5')
+    refute small_ship_stays_on_map?(@board, 'D4', 'E4')
+  end
 end
