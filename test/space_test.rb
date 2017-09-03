@@ -8,8 +8,8 @@ class SpaceTest < Minitest::Test
     @space = Space.new('B4')
   end
 
-  def test_space_unoccupied 
-    refute space.occupied
+  def test_space_unfull 
+    refute space.full
   end
 
   def test_space_not_fired_on 
@@ -17,6 +17,6 @@ class SpaceTest < Minitest::Test
   end
 
   def test_space_coordinates
-    assert_equal 'B4', space.coordinates
+    assert_equal 'B4', space.position
   end
 end
