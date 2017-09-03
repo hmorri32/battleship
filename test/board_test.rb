@@ -214,4 +214,16 @@ class BoardTest < Minitest::Test
     assert four.space_full?('C1')
     assert four.space_full?('D1')
   end
+
+  def test_fired_on?
+    refute four.fired_on?('A1')    
+  end
+
+  def test_fired_on_method 
+    refute four.fired_on?('A1')
+    four.fire_on('A1')
+    assert four.fired_on?('A1')
+  end
+
+  
 end
