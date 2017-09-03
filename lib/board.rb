@@ -4,7 +4,8 @@ class Board
   attr_accessor :size
 
   def initialize(size)
-    @size = size
+    @size  = size
+    @board = build_board
   end
 
   def rows
@@ -31,7 +32,7 @@ class Board
     space_name_arr.each_slice(@size).to_a
   end
 
-  def build_game_grid
+  def build_board
     row_arr.map do |row|
       row.map.with_index do |coordinates, index|
         row[index] = {coordinates => space_hash[coordinates]}
@@ -85,9 +86,43 @@ class Board
   end
 
   def get_space(spot)
-    build_game_grid.map do |row|
+    @board.map do |row|
       row.find {|space_hash| space_hash[spot]}
     end.compact[0][spot]
+  end
+  
+  def fill_space(position)
+    get_space(position).full = true
+  end
+
+  def fill_spaces(one, two)
+    if same_row?(one, two)
+      fill_row(one, two)
+    else
+      fill_column(one, two)
+    end
+  end
+
+  def fill_row(one, two)
+    all_spaces_flat(one, two).each {|space| fill_space(space)}
+  end
+  
+  def fill_column(one, two)
+    all_spaces_vertical(one, two).each {|space| fill_space(space)}
+  end
+
+  def space_full?(position)
+    get_space(position).full
+  end
+
+  def all_spaces_flat(one, two)
+    nums = (one[1]..two[1]).to_a
+    nums.map {|num| one[0] + num}
+  end
+  
+  def all_spaces_vertical(one, two)
+    letters = (one[0]..two[0]).to_a
+    letters.map {|letter| letter + one[1]}
   end
 
   def neighbors?(one, two)
