@@ -115,6 +115,14 @@ class Board
     get_space(position).full
   end
 
+  def get_spaces(one, two)
+    if same_row?(one, two)
+      all_spaces_flat(one, two)
+    elsif same_column?(one, two)
+      all_spaces_vertical(one, two)
+    end
+  end
+
   def all_spaces_flat(one, two)
     nums = (one[1]..two[1]).to_a
     nums.map {|num| one[0] + num}
