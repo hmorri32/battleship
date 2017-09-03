@@ -52,4 +52,18 @@ class ValidateTest < Minitest::Test
     refute no_diagonals?("A1", "B2")
     refute no_diagonals?("A5", "B2")
   end
+
+  def test_valid_length 
+    cool_ship = Ship.new(2)
+    threez    = Ship.new(3)
+    four_foot = Ship.new(4)
+
+    assert valid_length?(@board, cool_ship, 'A1', 'A2')
+    assert valid_length?(@board, threez, 'A1', 'A3')
+    assert valid_length?(@board, four_foot, 'A1', 'A4')
+    
+    refute valid_length?(@board, cool_ship, 'A1', 'A4')
+    refute valid_length?(@board, threez, 'A1', 'A4')
+    refute valid_length?(@board, four_foot, 'A1', 'A3')
+  end
 end
