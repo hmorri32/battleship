@@ -30,7 +30,7 @@ class PlayerTest < Minitest::Test
   def test_playa_can_shoot 
     assert_equal 0, playa.shot_count
     
-    playa.shoot
+    playa.shoot(board, 'A1')
 
     assert_equal 1, playa.shot_count
   end
@@ -68,6 +68,23 @@ class PlayerTest < Minitest::Test
     assert board.space_full?('A2')
     assert board.space_full?('A3')
     assert board.space_full?('A4')
+  end
+
+  def test_player_can_attack 
+    refute board.fired_on?('A1')
+    refute board.fired_on?('A2')
+    refute board.fired_on?('B1')
+    refute board.fired_on?('D4')
+
+    playa.shoot(board, 'A1')
+    playa.shoot(board, 'A2')
+    playa.shoot(board, 'B1')
+    playa.shoot(board, 'D4')
+
+    assert board.fired_on?('A1')
+    assert board.fired_on?('A2')
+    assert board.fired_on?('B1')
+    assert board.fired_on?('D4')    
   end
 end
 
