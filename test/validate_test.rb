@@ -42,4 +42,14 @@ class ValidateTest < Minitest::Test
     refute small_ship_stays_on_map?(@board, 'A4', 'A5')
     refute small_ship_stays_on_map?(@board, 'D4', 'E4')
   end
+
+  def test_no_diagonals 
+    assert no_diagonals?("A2", "B2")
+    assert no_diagonals?("A2", "A3")
+    assert no_diagonals?("C1", "C4")
+
+    refute no_diagonals?("A2", "B4")
+    refute no_diagonals?("A1", "B2")
+    refute no_diagonals?("A5", "B2")
+  end
 end
