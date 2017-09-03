@@ -15,4 +15,12 @@ class Ship
     @bow   = bow
     @stern = stern
   end
+
+  def strike
+    @damage += 1
+  end
+
+  def sunk?
+    @damage == @length
+  end
 end
