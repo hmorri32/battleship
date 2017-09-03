@@ -11,8 +11,9 @@ class Player
     ship_yard
   end
 
-  def shoot 
+  def shoot(board, space)
     @shot_count +=1 
+    board.fire_on(space)
   end
 
   def ship_yard 
