@@ -16,8 +16,6 @@ module Validate
   end
 
   def no_diagonals?(space_1, space_2)
-    space_1[0] == space_2[0] ||space_1[1] == space_2[1]
+    space_1[0] == space_2[0] || space_1[1] == space_2[1]
   end
-
-  
 end

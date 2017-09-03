@@ -23,7 +23,6 @@ class Player
   end
 
   def place_ship(ship, bow, stern)
-    # TODO - validate lol
     ship.place(bow, stern)
   end
 end
