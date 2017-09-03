@@ -155,17 +155,17 @@ class BoardTest < Minitest::Test
     refute four.same_column?('A1', 'B4')
   end
 
-  def test_length_horizontally
-    assert_equal 4, four.length_horizontally('A1', 'A4')
-    assert_equal 3, four.length_horizontally('A1', 'A3')
-    assert_equal 2, four.length_horizontally('A1', 'A2')
-    assert_equal 1, four.length_horizontally('A1', 'A1')
+  def test_span_horizontally
+    assert_equal 4, four.span_horizontally('A1', 'A4')
+    assert_equal 3, four.span_horizontally('A1', 'A3')
+    assert_equal 2, four.span_horizontally('A1', 'A2')
+    assert_equal 1, four.span_horizontally('A1', 'A1')
   end
 
-  def test_length_vertically
-    assert_equal 4, four.length_vertically('A1', 'D1')
-    assert_equal 3, four.length_vertically('A1', 'C1')
-    assert_equal 2, four.length_vertically('A1', 'B1')
-    assert_equal 1, four.length_vertically('A1', 'A1')
+  def test_span_vertically
+    assert_equal 4, four.span_vertically('A1', 'D1')
+    assert_equal 3, four.span_vertically('A1', 'C1')
+    assert_equal 2, four.span_vertically('A1', 'B1')
+    assert_equal 1, four.span_vertically('A1', 'A1')
   end
 end
