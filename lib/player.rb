@@ -1,4 +1,5 @@
 require_relative 'ship'
+require_relative 'board'
 
 class Player
   attr_accessor :shot_count, :ship_arr, :ships
@@ -22,7 +23,8 @@ class Player
     @ships.length
   end
 
-  def place_ship(ship, bow, stern)
+  def place_ship(board, ship, bow, stern)
     ship.place(bow, stern)
+    board.fill_spaces(bow, stern)
   end
 end
