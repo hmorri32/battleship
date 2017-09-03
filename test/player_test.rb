@@ -2,11 +2,17 @@ require_relative 'require'
 require './lib/player'
 
 class PlayerTest < Minitest::Test 
-  attr_accessor :inter, :playa, :board
+  attr_accessor :inter,
+                :playa,
+                :board, 
+                :ship1,
+                :ship2
 
   def setup
     @inter = Player.new([2,3,4])
     @playa = Player.new([2,3])
+    @ship1 = playa.ships[0]
+    @ship2 = playa.ships[1]
     @board = Board.new(4)
   end
 
@@ -41,8 +47,8 @@ class PlayerTest < Minitest::Test
   end
 
   def test_playa_can_place_ship 
-    ship1 = playa.ships[0]
-    ship2 = playa.ships[1]
+    @ship1 = playa.ships[0]
+    @ship2 = playa.ships[1]
 
     playa.place_ship(board, ship1, 'A1', 'A2')
     playa.place_ship(board, ship2, 'B1', 'B3')
@@ -85,6 +91,38 @@ class PlayerTest < Minitest::Test
     assert board.fired_on?('A2')
     assert board.fired_on?('B1')
     assert board.fired_on?('D4')    
+  end
+
+  def test_players_ships_can_be_sunk 
+    refute ship1.sunk?
+    refute ship2.sunk?
+
+    ship1.strike
+    ship1.strike
+
+    ship2.strike
+    ship2.strike
+    ship2.strike
+
+    assert ship1.sunk?
+    assert ship2.sunk?
+  end
+
+  def test_player_can_be_a_loser 
+    refute ship1.sunk?
+    refute ship2.sunk?
+    refute playa.loser?
+
+    ship1.strike
+    ship1.strike
+
+    ship2.strike
+    ship2.strike
+    ship2.strike
+
+    assert ship1.sunk?
+    assert ship2.sunk?
+    assert playa.loser?
   end
 end
 
