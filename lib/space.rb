@@ -1,11 +1,11 @@
 class Space
-  attr_accessor :coordinates, 
-                :occupied,
+  attr_accessor :position, 
+                :full,
                 :fired_on
   
-  def initialize(coordinates)
-    @coordinates = coordinates
-    @occupied    = false
-    @fired_on    = false
+  def initialize(position)
+    @position = position
+    @full     = false
+    @fired_on = false
   end
 end
