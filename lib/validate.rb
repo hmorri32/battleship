@@ -22,4 +22,10 @@ module Validate
       ship.length == board.span_vertically(space_1, space_2)
     end
   end
+
+  def no_overlap?(board, ship, bow, stern)
+    board.get_spaces(bow, stern).none? do |space|
+      board.space_full?(space)
+    end
+  end
 end
