@@ -2,11 +2,12 @@ require_relative 'require'
 require './lib/player'
 
 class PlayerTest < Minitest::Test 
-  attr_accessor :inter, :playa
+  attr_accessor :inter, :playa, :board
 
   def setup
     @inter = Player.new([2,3,4])
     @playa = Player.new([2,3])
+    @board = Board.new(4)
   end
 
   def test_existence 
@@ -43,14 +44,30 @@ class PlayerTest < Minitest::Test
     ship1 = playa.ships[0]
     ship2 = playa.ships[1]
 
-    playa.place_ship(ship1, 'A1', 'A2')
-    playa.place_ship(ship2, 'B1', 'B3')
+    playa.place_ship(board, ship1, 'A1', 'A2')
+    playa.place_ship(board, ship2, 'B1', 'B3')
 
     assert_equal 'A1', ship1.bow
     assert_equal 'A2', ship1.stern
 
     assert_equal 'B1', ship2.bow
     assert_equal 'B3', ship2.stern
+  end
+
+  def test_places_ships_are_on_board 
+    ship1 = playa.ships[0]
+    
+    playa.place_ship(board, ship1, 'B1', 'D1')
+    playa.place_ship(board, ship1, 'A1', 'A4')
+
+    assert board.space_full?('B1')
+    assert board.space_full?('C1')
+    assert board.space_full?('D1')
+
+    assert board.space_full?('A1')
+    assert board.space_full?('A2')
+    assert board.space_full?('A3')
+    assert board.space_full?('A4')
   end
 end
 
