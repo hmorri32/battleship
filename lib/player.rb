@@ -28,4 +28,8 @@ class Player
     ship.place(bow, stern)
     board.fill_spaces(bow, stern)
   end
+
+  def loser? 
+    @ships.all? {|ship| ship.sunk?}
+  end
 end
