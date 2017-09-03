@@ -102,14 +102,14 @@ class Board
     one[1] == two[1]
   end
 
-  def length_horizontally(one, two)
+  def span_horizontally(one, two)
     return unless same_row?(one, two)
     spot_1 = one[1].to_i
     spot_2 = two[1].to_i
     subtract(spot_1, spot_2)
   end
 
-  def length_vertically(one, two)
+  def span_vertically(one, two)
     return unless same_column?(one, two)
     spot_1 = rows.index(one[0])
     spot_2 = rows.index(two[0])
