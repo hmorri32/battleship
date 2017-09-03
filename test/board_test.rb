@@ -52,7 +52,7 @@ class BoardTest < Minitest::Test
   end
 
   def format_grid
-    four.build_game_grid.map do |row|
+    four.build_board.map do |row|
       row.map {|column| column.keys[0]}
     end
   end
@@ -111,16 +111,16 @@ class BoardTest < Minitest::Test
   end
 
   def test_get_space 
-    assert_equal 'A4', four.get_space('A4').coordinates
+    assert_equal 'A4', four.get_space('A4').position
     assert_instance_of Space, four.get_space('A4')
     
-    assert_equal 'B2', four.get_space('B2').coordinates
+    assert_equal 'B2', four.get_space('B2').position
     assert_instance_of Space, four.get_space('B2')
     
-    assert_equal 'C3', four.get_space('C3').coordinates
+    assert_equal 'C3', four.get_space('C3').position
     assert_instance_of Space, four.get_space('C3')
 
-    assert_equal 'D1', four.get_space('D1').coordinates
+    assert_equal 'D1', four.get_space('D1').position
     assert_instance_of Space, four.get_space('D1')
   end
 
@@ -167,5 +167,51 @@ class BoardTest < Minitest::Test
     assert_equal 3, four.span_vertically('A1', 'C1')
     assert_equal 2, four.span_vertically('A1', 'B1')
     assert_equal 1, four.span_vertically('A1', 'A1')
+  end
+
+  def test_space_full_default_false
+    refute four.space_full?('A1')
+  end
+
+  def test_can_fill_space 
+    refute four.space_full?('A1')
+    four.fill_space('A1')
+    assert four.space_full?('A1')
+  end
+
+  def test_can_find_all_spots_flat 
+    expected1 = ['A1', 'A2', 'A3', 'A4']
+    expected2 = ['A1', 'A2', 'A3']
+    expected3 = ['C2', 'C3', 'C4']
+    
+    assert_equal expected1, four.all_spaces_flat('A1', 'A4')
+    assert_equal expected2, four.all_spaces_flat('A1', 'A3')
+    assert_equal expected3, four.all_spaces_flat('C2', 'C4')
+  end
+
+  def test_can_find_all_spaces_vertical 
+    expected1 = ["A3", "B3", "C3", "D3"]
+    expected2 = ["B1", "C1"]
+    expected3 = ["A4", "B4", "C4"]
+
+    assert_equal expected1, four.all_spaces_vertical('A3', 'D3')
+    assert_equal expected2, four.all_spaces_vertical('B1', 'C1')
+    assert_equal expected3, four.all_spaces_vertical('A4', 'C4')
+  end
+
+  def test_can_fill_sequential_spaces 
+    four.fill_spaces('A1', 'A4')
+
+    assert four.space_full?('A1')
+    assert four.space_full?('A2')
+    assert four.space_full?('A3')
+    assert four.space_full?('A4')
+
+    four.fill_spaces('A1', 'D1')
+
+    assert four.space_full?('A1')
+    assert four.space_full?('B1')
+    assert four.space_full?('C1')
+    assert four.space_full?('D1')
   end
 end
