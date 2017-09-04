@@ -16,7 +16,7 @@ class GameRunner
     when answer == 'p' || answer == 'play'
       game = BattleShip.new
     when answer == 'i' || answer == 'instructions'
-      puts Messages.instructions
+      puts Messages.instructions.colorize(:blue)
       welcome
     when answer == 'q' || answer == 'quit'
       puts "sayonara".colorize(:red)
