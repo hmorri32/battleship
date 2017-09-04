@@ -225,5 +225,23 @@ class BoardTest < Minitest::Test
     assert four.fired_on?('A1')
   end
 
-  
+  def test_hit? 
+    refute four.hit?('A4')
+    
+    four.fill_spaces('A1', 'A4')
+    four.fire_on('A4')
+
+    assert four.hit?('A4')
+  end
+
+  def test_miss?
+    refute four.miss?('A4')
+    refute four.fired_on?('A4')
+    
+    four.fill_spaces('A1', 'B1')
+    four.fire_on('A4')
+
+    assert four.miss?('A4')
+    assert four.fired_on?('A4')
+  end
 end
