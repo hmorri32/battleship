@@ -175,7 +175,6 @@ class Board
     get_space(space).fired_on = true
   end
 
-  # TODO TEST
   def hit?(space)
     fired_on?(space) && space_full?(space)
   end
