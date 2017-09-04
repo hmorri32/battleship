@@ -52,6 +52,7 @@ class ValidateTest < Minitest::Test
     assert valid_length?(board, cool_ship, 'A1', 'A2')
     assert valid_length?(board, threez, 'A1', 'A3')
     assert valid_length?(board, four_foot, 'A1', 'A4')
+    assert valid_length?(board, four_foot, 'A1', 'D1')
     
     refute valid_length?(board, cool_ship, 'A1', 'A4')
     refute valid_length?(board, threez, 'A1', 'A4')
