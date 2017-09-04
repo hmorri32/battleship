@@ -14,8 +14,12 @@ class Computer < Player
     history << space if !history.include?(space)
     pick_spaces(board, history)
   end
+
+  def pick_empty_space(board)
+    pick_spaces(board).find {|space| !board.space_full?(space)}
 end
 
 board = Board.new(4)
 c = Computer.new([2,3])
 p c.pick_spaces(board)
+p c.pick_empty_space(board)
