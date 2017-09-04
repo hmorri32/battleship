@@ -25,7 +25,10 @@ class Board
   end
 
   def space_hash
-    space_name_arr.reduce({}) {|spaces, name| spaces["#{name}"] = Space.new(name); spaces}
+    space_name_arr.reduce({}) do |spaces, name| 
+      spaces["#{name}"] = Space.new(name)
+      spaces
+    end
   end
 
   def row_arr
