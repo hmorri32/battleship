@@ -9,12 +9,11 @@ class Computer < Player
 
   def pick_spaces(board, history = [])
     spaces = board.space_name_arr
-    until spaces.length == 0 do
-      spaces.pop
-    end
-
+    return history if spaces.length == history.length
+    space = random_space(board)
+    history << space if !history.include?(space)
+    pick_spaces(board, history)
   end
-
 end
 
 board = Board.new(4)
