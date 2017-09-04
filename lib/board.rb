@@ -1,7 +1,7 @@
 require_relative 'space'
 
 class Board
-  attr_accessor :size
+  attr_accessor :size, :board
 
   def initialize(size)
     @size  = size
@@ -173,5 +173,14 @@ class Board
 
   def fire_on(space)
     get_space(space).fired_on = true
+  end
+
+  # TODO TEST
+  def hit?(space)
+    fired_on?(space) && space_full?(space)
+  end
+  
+  def miss?(space)
+    fired_on?(space) && !space_full?(space)
   end
 end
