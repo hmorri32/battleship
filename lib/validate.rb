@@ -28,4 +28,8 @@ module Validate
       board.space_full?(space)
     end
   end
+
+  def game_over?(one, two)
+    one.loser? || two.loser?
+  end
 end
