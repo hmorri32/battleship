@@ -35,12 +35,10 @@ class BattleShip
   end
   
   def c_ships 
-    # TODO - DEBUG THIS> SOMETIMES DOES NOT WORk. 
     computer.ships.each do |ship|
       spaces = computer.position(computer_board, ship)
       spaces = valid_computer_placement?(computer_board, ship, spaces)
       computer.place_ship(computer_board, ship, spaces[0], spaces[1])
-      p computer_board
     end
     puts Messages.computer_has_placed_ships.colorize(:red)
   end
@@ -142,7 +140,28 @@ class BattleShip
       puts dash_board.draw(on_deck['board']).colorize(color)
       turn_over(on_deck['player'])
       loser = on_deck['enemy'].loser? || on_deck['player'].loser?
-      # TODO = GAME OVER SEQUENCE YO 
+    end
+    game_over 
+  end
+
+  def game_over 
+    end_time = Time.new - @time
+    seconds  = 0
+    minutes  = 0
+
+    case 
+    when end_time < 60
+      seconds = end_time.round(2)
+    when end_time > 60
+      minutes = (end_time/60).round(2)
+    end
+
+    if player.loser? 
+      puts 'You lose. Sucks to suck, mate.'.colorize(:red)
+      puts "This game lasted #{minutes} minutes and #{seconds} seconds."
+    else 
+      puts 'you smoked the competition, matey'.colorize(:blue)
+      puts "This game lasted #{minutes} minutes and #{seconds} seconds."
     end
   end
 
