@@ -3,11 +3,12 @@ require './lib/validate'
 
 class ValidateTest < Minitest::Test
   include Validate 
-  attr_reader :board, :playa
+  attr_reader :board, :playa, :other
 
   def setup 
     @board = Board.new(4)
     @playa = Player.new([2, 3])
+    @other = Player.new([2, 3])
   end
 
   def test_dis
@@ -69,5 +70,15 @@ class ValidateTest < Minitest::Test
 
     refute no_overlap?(board, ship2, 'A1', 'A4')
     assert no_overlap?(board, ship2, 'B2', 'D2')
+  end
+
+  def test_loser 
+    @playa.ships[0].strike
+    @playa.ships[0].strike
+    @playa.ships[1].strike
+    @playa.ships[1].strike
+    @playa.ships[1].strike
+
+    assert game_over?(playa, other)
   end
 end
