@@ -1,5 +1,6 @@
 require_relative 'player'
 require_relative 'board'
+require_relative 'ship'
 
 class Computer < Player 
 
@@ -21,19 +22,42 @@ class Computer < Player
 
   def position_flat(board, one, length)
     choose_spaces(board).find do |two|
-      !board.space_full?(one) && board.span_horizontally(one, two) == length
+      !board.space_full?(two) && board.span_horizontally(one, two) == length
     end
   end
 
   def position_vertical(board, one, length)
     choose_spaces(board).find do |two|
-      !board.space_full?(one) && board.span_vertically(one, two) == length
+      !board.space_full?(two) && board.span_vertically(one, two) == length
     end
   end
-  # todo - random spaces vertically
+  
+  def shuffler
+    [true, false, true, false, true, false].shuffle
+                                           .shuffle
+                                           .shuffle
+                                           .shuffle
+                                           .shuffle
+                                           .shuffle
+                                           .pop
+  end
+
+  def rando_flat_vertical(board, one, length)
+    bool = shuffler
+    if bool 
+      position_flat(board, one, length)
+    else
+      position_vertical(board, one, length)
+    end
+  end
+
   def position(board, ship)
     one = empty_space(board)
-    two = position_flat(board, one, ship.length)
+    two = rando_flat_vertical(board, one, ship.length)
+    if [one, two].include?(nil)
+      one = empty_space(board)
+      two = rando_flat_vertical(board, one, ship.length)
+    end
     [one, two].sort
   end
 
@@ -42,7 +66,11 @@ class Computer < Player
   end
 end
 
-# board = Board.new(4)
-# c = Computer.new([2,3])
-# p c.pick_spaces(board)
+board = Board.new(4)
+c = Computer.new([2,3])
+ship = c.ships[0]
+ship2 = c.ships[1]
+p c.position(board, ship)
+p c.position(board, ship2)
+# p c.rando_flat_vertical(board, 'a1', 3)
 # p c.pick_empty_space(board)
