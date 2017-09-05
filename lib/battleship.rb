@@ -5,7 +5,8 @@ require_relative 'computer'
 require_relative 'validate'
 require_relative 'messages'
 require_relative 'dashboard'
-require 'colorize'
+require          'pry'
+require          'colorize'
 
 class BattleShip
   include Messages 
@@ -37,9 +38,21 @@ class BattleShip
     # TODO - DEBUG THIS> SOMETIMES DOES NOT WORk. 
     computer.ships.each do |ship|
       spaces = computer.position(computer_board, ship)
+      spaces = valid_computer_placement?(computer_board, ship, spaces)
       computer.place_ship(computer_board, ship, spaces[0], spaces[1])
+      p computer_board
     end
     puts Messages.computer_has_placed_ships.colorize(:red)
+  end
+
+  def valid_computer_placement?(board, ship, spaces)
+    validity = false
+    until validity
+      direction = valid_direction?(spaces)
+      length    = length?(board, ship, spaces)  if direction
+      validity  = overlap?(board, ship, spaces) if length      
+    end
+    return spaces
   end
 
   def p_ships 
@@ -115,16 +128,21 @@ class BattleShip
       on_deck['player'] == computer ? color = :red : color = :blue
       space = space_to_fire_on(on_deck['player'])
       on_deck['player'].shoot(on_deck['board'], space)
-      puts "\YOU fired upon space #{space}".colorize(color)
+      
+      puts "\nYOU fired upon space #{space}".colorize(color) if on_deck['player'] == player
+      puts "\nCOMPUTER fired upon space #{space}".colorize(color) if on_deck['player'] == computer
+
       if dash_board.hit?(on_deck['board'], space)
         puts 'HIT!'.colorize(color)
         ship_stats(on_deck['board'], on_deck['enemy'], space, color)
       else 
         puts 'MISS!'.colorize(color)
       end
+      
       puts dash_board.draw(on_deck['board']).colorize(color)
       turn_over(on_deck['player'])
       loser = on_deck['enemy'].loser? || on_deck['player'].loser?
+      # TODO = GAME OVER SEQUENCE YO 
     end
   end
 
@@ -164,7 +182,8 @@ class BattleShip
     return if validity
     render_board(player, computer_board)
     puts "\nEnter the space you wish to fire upon. IE: A2\n\n"
-    space    = gets.chomp.upcase
+    space = gets.chomp.upcase
+    exit if space == 'Q'
     validity = validated_space?(computer_board, space)
     return space if validity
     human_target(player, computer_board, validity)
