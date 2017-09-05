@@ -5,14 +5,14 @@ require_relative 'computer'
 require_relative 'validate'
 require_relative 'BattleShip'
 require_relative 'messages'
-require 'colorize'
+require          'colorize'
 
 
 class GameRunner 
   def self.welcome
     puts Messages.welcome
     answer = gets.chomp.downcase 
-    case 
+    case
     when answer == 'p' || answer == 'play'
       game = BattleShip.new
     when answer == 'i' || answer == 'instructions'
