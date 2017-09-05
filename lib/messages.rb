@@ -15,9 +15,6 @@ module Messages
     str = ''
     ship.length == 3 ? str << "A1 A3" : str << "A1 A2"
 
-    "\nEnter the spaces in which you wish to place your #{ship.length} length ship\nThese are space separated values.\nThe first value will be the starting point\nand the second value will be the end point.\nFor example, #{str} will place your ships bow at #{str[0..1]} and stern at #{str[0..-1]}.\nPlease input your spaces."
+    "\nEnter the spaces in which you wish to place your #{ship.length} length ship\nThese are space separated values.\nThe first value will be the starting point\nand the second value will be the end point.\nFor example, #{str} will place your ships bow at #{str[0..1]} and stern at #{str[0..-1]}.\n\nPlease input your spaces.\n"
   end
-
-
-
 end
