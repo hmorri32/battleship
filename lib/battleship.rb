@@ -34,6 +34,7 @@ class BattleShip
   end
   
   def c_ships 
+    # TODO - DEBUG THIS> SOMETIMES DOES NOT WORk. 
     computer.ships.each do |ship|
       spaces = computer.position(computer_board, ship)
       computer.place_ship(computer_board, ship, spaces[0], spaces[1])
@@ -106,9 +107,49 @@ class BattleShip
   end
 
   def game_flow 
-    on_deck = player_firing 
-    space   = space_to_fire_on(on_deck['player'])
-    p on_deck #.shoot(computer_board, space)
+    color = ''
+    
+    loser = false
+    until loser
+      on_deck = player_firing 
+      on_deck['player'] == computer ? color = :red : color = :blue
+      space = space_to_fire_on(on_deck['player'])
+      on_deck['player'].shoot(on_deck['board'], space)
+      puts "\YOU fired upon space #{space}".colorize(color)
+      if dash_board.hit?(on_deck['board'], space)
+        puts 'HIT!'.colorize(color)
+        ship_stats(on_deck['board'], on_deck['enemy'], space, color)
+      else 
+        puts 'MISS!'.colorize(color)
+      end
+      puts dash_board.draw(on_deck['board']).colorize(color)
+      turn_over(on_deck['player'])
+      loser = on_deck['enemy'].loser? || on_deck['player'].loser?
+    end
+  end
+
+  def turn_over(player)
+    return if player == computer
+    puts "\nPRESS ENTER TO END TURN.".colorize(:blue)
+    answer = gets
+    return if answer == "\n"
+    turn_over(player)
+  end
+
+  def ship_stats(board, enemy, space, color)
+    ship = get_ship(board, enemy, space)
+    puts "Ship's damage total is #{ship.length}!".colorize(color)
+    ship.strike 
+    puts "Ship's damage is now at #{ship.damage}!".colorize(color)
+  end
+
+  def get_ship(board, player, space)
+    player.ships.find do |ship|
+      bow    = ship.bow
+      stern  = ship.stern
+      spaces = board.get_spaces(bow, stern)
+      spaces.include?(space)
+    end
   end
 
   def space_to_fire_on(player)
@@ -119,13 +160,14 @@ class BattleShip
     end
   end
 
-  def human_target(player, computer_board)
-    validity = false 
+  def human_target(player, computer_board, validity = false)
+    return if validity
     render_board(player, computer_board)
     puts "\nEnter the space you wish to fire upon. IE: A2\n\n"
     space    = gets.chomp.upcase
     validity = validated_space?(computer_board, space)
-    return space if validity 
+    return space if validity
+    human_target(player, computer_board, validity)
   end
 
   def validated_space?(computer_board, space) 
@@ -141,18 +183,18 @@ class BattleShip
   end
 
   def render_board(player, board)
-    puts dash_board.draw(computer_board).colorize(:blue)
+    puts dash_board.draw(board).colorize(:blue)
   end
 
   def player_firing(obj = nil)
     if player.shot_count <= computer.shot_count 
-      obj = {"player"   => player, 
-             "opponent" => computer, 
-             "board"    => computer_board} 
+      obj = {"player" => player, 
+             "enemy"  => computer, 
+             "board"  => computer_board} 
     else 
-      obj = {"player"   => computer, 
-             "opponent" => player,
-             "board"    => player_board}  
+      obj = {"player" => computer, 
+             "enemy"  => player,
+             "board"  => player_board}  
     end
     if obj['player'] == player 
       puts "\nYour turn!!".colorize(:blue)
