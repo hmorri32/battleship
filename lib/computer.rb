@@ -65,12 +65,3 @@ class Computer < Player
     choose_spaces(board).find {|space| !board.fired_on?(space)}
   end
 end
-
-board = Board.new(4)
-c = Computer.new([2,3])
-ship = c.ships[0]
-ship2 = c.ships[1]
-p c.position(board, ship)
-p c.position(board, ship2)
-# p c.rando_flat_vertical(board, 'a1', 3)
-# p c.pick_empty_space(board)
