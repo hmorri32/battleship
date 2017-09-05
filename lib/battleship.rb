@@ -108,7 +108,7 @@ class BattleShip
   def game_flow 
     on_deck = player_firing 
     space   = space_to_fire_on(on_deck['player'])
-
+    p on_deck #.shoot(computer_board, space)
   end
 
   def space_to_fire_on(player)

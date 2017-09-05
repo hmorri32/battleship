@@ -10,7 +10,7 @@ class Computer < Player
   def choose_spaces(board, history = [])
     spaces = board.space_name_arr
     return history if spaces.length == history.length
-    space = random_space(board)
+    space  = random_space(board)
     history << space if !history.include?(space)
     choose_spaces(board, history)
   end
