@@ -30,14 +30,16 @@ class Computer < Player
       !board.space_full?(one) && board.span_vertically(one, two) == length
     end
   end
-
+  # todo - random spaces vertically
   def position(board, ship)
     one = empty_space(board)
     two = position_flat(board, one, ship.length)
     [one, two].sort
   end
-  # def not_attacked(board)
-  # end
+
+  def not_attacked(board)
+    choose_spaces(board).find {|space| !board.fired_on?(space)}
+  end
 end
 
 # board = Board.new(4)
