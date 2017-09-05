@@ -4,6 +4,7 @@ require_relative 'player'
 require_relative 'computer'
 require_relative 'validate'
 require_relative 'messages'
+require_relative 'dashboard'
 require 'colorize'
 
 class BattleShip
@@ -13,22 +14,26 @@ class BattleShip
   attr_accessor :player, 
                 :computer, 
                 :computer_board,
-                :player_board
+                :player_board,
+                :dash_board
 
   def initialize
     @player         = Player.new([2,3])
     @computer       = Computer.new([2,3])
     @computer_board = Board.new(4)
     @player_board   = Board.new(4)
-    ship_placement
+    @dash_board     = DashBoard.new
+    @time           = Time.new
+    ship_yard
+    game_flow
   end
 
-  def ship_placement 
-    computer_ships
-    player_ships
+  def ship_yard 
+    c_ships
+    p_ships
   end
   
-  def computer_ships 
+  def c_ships 
     computer.ships.each do |ship|
       spaces = computer.position(computer_board, ship)
       computer.place_ship(computer_board, ship, spaces[0], spaces[1])
@@ -36,7 +41,7 @@ class BattleShip
     puts Messages.computer_has_placed_ships.colorize(:red)
   end
 
-  def player_ships 
+  def p_ships 
     player.ships.each do |ship|
       spaces = validate_input(ship)
       player.place_ship(player_board, ship, spaces[0], spaces[1])
@@ -47,9 +52,9 @@ class BattleShip
   def validate_input(ship)
     dale = false 
     until dale 
-      puts Messages.place_ship(ship) 
+      puts Messages.place_ship(ship) + "\n"
       answer = gets.chomp.upcase.split(" ")
-      dale = valid_space?(player_board, ship, answer)
+      dale   = valid_space?(player_board, ship, answer)
     end
     return answer
   end
@@ -98,5 +103,64 @@ class BattleShip
       end
     end
     return true
+  end
+
+  def game_flow 
+    on_deck = player_firing 
+    space   = space_to_fire_on(on_deck['player'])
+
+  end
+
+  def space_to_fire_on(player)
+    if player == computer 
+      computer.not_attacked(player_board)
+    else 
+      human_target(player, computer_board)
+    end
+  end
+
+  def human_target(player, computer_board)
+    validity = false 
+    render_board(player, computer_board)
+    puts "\nEnter the space you wish to fire upon. IE: A2\n\n"
+    space    = gets.chomp.upcase
+    validity = validated_space?(computer_board, space)
+    return space if validity 
+  end
+
+  def validated_space?(computer_board, space) 
+    if !computer_board.space_exists?(space)
+      puts "\nThat space does not exist. Try again.".colorize(:red)
+      return false
+    end
+    if computer_board.fired_on?(space)
+      puts "\nYou have already fired on this space!".colorize(:red)
+      return false
+    end
+    return true
+  end
+
+  def render_board(player, board)
+    puts dash_board.draw(computer_board).colorize(:blue)
+  end
+
+  def player_firing(obj = nil)
+    if player.shot_count <= computer.shot_count 
+      obj = {"player"   => player, 
+             "opponent" => computer, 
+             "board"    => computer_board} 
+    else 
+      obj = {"player"   => computer, 
+             "opponent" => player,
+             "board"    => player_board}  
+    end
+    if obj['player'] == player 
+      puts "\nYour turn!!".colorize(:blue)
+      puts "++++++++++++++++++\n".colorize(:blue)
+    elsif obj['player'] == computer 
+      puts "\n Computer's turn!!".colorize(:red)
+      puts "++++++++++++++++++\n".colorize(:red)
+    end
+    obj
   end
 end
