@@ -38,7 +38,7 @@ class DashBoard
     end
   end
 
-  def render(board)
+  def draw(board)
     grid(board.size, rows(board))
   end
 

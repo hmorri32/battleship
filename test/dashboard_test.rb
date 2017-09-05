@@ -51,7 +51,7 @@ class DashBoardTest < Minitest::Test
   def test_render 
     expected = "==============\n. 1 2 3 4\nA        \nB        \nC        \nD        \n=============="
 
-    assert_equal expected, dash.render(@board)
+    assert_equal expected, dash.draw(@board)
   end
 
   def test_hit? 
