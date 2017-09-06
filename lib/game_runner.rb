@@ -15,7 +15,7 @@ class GameRunner
     answer = gets.chomp.downcase 
     case
     when answer == 'p' || answer == 'play'
-      game = BattleShip.new
+      select_difficulty
     when answer == 'i' || answer == 'instructions'
       puts Messages.instructions.colorize(:blue)
       welcome
@@ -23,8 +23,22 @@ class GameRunner
       puts "sayonara".colorize(:red)
       exit
     else 
-      puts "\nPlease select either 'p', 'i', or 'q'!".colorize(:red)
+      puts Messages.invalid_input.colorize(:red)
       welcome
+    end
+  end
+
+  def self.select_difficulty 
+    puts Messages.difficulty.colorize(:blue)
+    answer = gets.chomp.downcase 
+    case
+    when answer == 'b' || answer == 'beginner'
+      game = BattleShip.new(4, [2,3])
+    when answer == 'i' || answer == 'intermediate'
+      game = BattleShip.new(8, [2,3,4])
+    else 
+      puts Messages.invalid_difficulty.colorize(:red)
+      select_difficulty
     end
   end
   welcome
