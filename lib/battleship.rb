@@ -18,11 +18,11 @@ class BattleShip
                 :player_board,
                 :dash_board
 
-  def initialize
-    @player         = Player.new([2,3])
-    @computer       = Computer.new([2,3])
-    @computer_board = Board.new(4)
-    @player_board   = Board.new(4)
+  def initialize(board_size, ships)
+    @player         = Player.new(ships)
+    @computer       = Computer.new(ships)
+    @computer_board = Board.new(board_size)
+    @player_board   = Board.new(board_size)
     @dash_board     = DashBoard.new
     @time           = Time.new
     ship_yard
