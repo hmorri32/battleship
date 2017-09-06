@@ -20,10 +20,6 @@ class Board
     rows.flat_map {|letter| columns.flat_map{|number| letter + number}}
   end
 
-  def space_exists?(space)
-    space_name_arr.include?(space)
-  end
-
   def space_hash
     space_name_arr.reduce({}) do |spaces, name| 
       spaces["#{name}"] = Space.new(name)
@@ -47,6 +43,10 @@ class Board
     @board.map do |row|
       row.find {|space_hash| space_hash[spot]}
     end.compact[0][spot]
+  end
+  
+  def space_exists?(space)
+    space_name_arr.include?(space)
   end
   
   def fill_space(position)

@@ -145,7 +145,6 @@ class BattleShip
   end
 
   def game_over 
-    # TODO FIGURE OUT HOW TIME FUNCTIONS 
     end_time = Time.new
     end_min  = end_time.min - @time.min 
     end_sec  = 0

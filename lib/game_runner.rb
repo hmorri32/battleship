@@ -9,6 +9,7 @@ require          'colorize'
 
 
 class GameRunner 
+  # TODO FIGURE OUT HOW LEVELS WORK
   def self.welcome
     puts Messages.welcome
     answer = gets.chomp.downcase 
