@@ -21,7 +21,7 @@ class DashBoardTest < Minitest::Test
   end
 
   def test_border_method 
-    assert_equal '==============', dash.border
+    assert_equal '==================', dash.border
   end
 
   def test_row_formatter 
@@ -33,8 +33,8 @@ class DashBoardTest < Minitest::Test
   end
 
   def test_grid 
-    expected = "==============\n. 1 2\nA H H\nB H  \n=============="
-
+    expected = "==================\n. 1 2\nA H H\nB H  \n=================="
+    
     assert_equal expected, dash.grid(2, [['A', 'H', 'H'], ['B', 'H', '']])
   end
 
@@ -49,7 +49,7 @@ class DashBoardTest < Minitest::Test
   end
 
   def test_render 
-    expected = "==============\n. 1 2 3 4\nA        \nB        \nC        \nD        \n=============="
+    expected = "==================\n. 1 2 3 4\nA        \nB        \nC        \nD        \n=================="
 
     assert_equal expected, dash.draw(@board)
   end
