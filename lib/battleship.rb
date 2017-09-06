@@ -119,7 +119,7 @@ class BattleShip
 
   def game_flow 
     color = ''
-    
+    # TODO refactor all this junk
     loser = false
     until loser
       on_deck = player_firing 
@@ -145,23 +145,23 @@ class BattleShip
   end
 
   def game_over 
-    end_time = Time.new - @time
-    seconds  = 0
-    minutes  = 0
+    # TODO FIGURE OUT HOW TIME FUNCTIONS 
+    end_time = Time.new
+    end_min  = end_time.min - @time.min 
+    end_sec  = 0
 
-    case 
-    when end_time < 60
-      seconds = end_time.round(2)
-    when end_time > 60
-      minutes = (end_time/60).round(2)
+    if end_time.sec > @time.sec 
+      end_sec = end_time.sec - @time.sec
+    else 
+      end_sec = @time.sec - end_time.sec 
     end
 
     if player.loser? 
       puts 'You lose. Sucks to suck, mate.'.colorize(:red)
-      puts "This game lasted #{minutes} minutes and #{seconds} seconds."
+      puts "This game lasted #{end_min} minutes and #{end_sec} seconds."
     else 
-      puts 'you smoked the competition, matey'.colorize(:blue)
-      puts "This game lasted #{minutes} minutes and #{seconds} seconds."
+      puts 'You smoked the competition, matey'.colorize(:blue)
+      puts "This game lasted #{end_min} minutes and #{end_sec} seconds."
     end
   end
 
