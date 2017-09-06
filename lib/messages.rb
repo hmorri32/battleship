@@ -7,8 +7,20 @@ module Messages
     "\n\nPrepare for battle!\nYou are up against an ultra advanced AI opponent!\nIt will place it's ships and then you will place your ships.\n\nRules are as follows:\n\nYou will select the start and end spaces for your ship.\nYour ship must either be horizontally placed or vertically placed.\nYour ships boundaries cannot fall outside the confines of the grid.\nYour ship can not be placed on top of another ship.\nYour ship must occupy an existing space.\nYou can then attack spaces on your opponents board.\nIf you attack an empty space, you will MISS!\nIf you attack an occupied space, you will HIT!\nYour turn ends after you have shot.\nYour opponent will then shoot upon your board.\nThe game ends when one player has sunk all of the opponent's ships.\n\n"
   end
 
+  def self.difficulty 
+    "\nSelect difficulty.\n\nYou can choose b for beginner, or i for intermediate.\If beginner, you will have a 4x4 grid and 2 ships.\nIf intermediate, you will have an 8x8 grid and 3 ships.\n\nPress b for beginner or i for intermediate.\n"
+  end
+
   def self.computer_has_placed_ships 
     "\nThe computer has placed it's ships!\nYou must now place yours."
+  end
+
+  def self.invalid_difficulty
+    "\nPlease input either 'b' or 'i'!"
+  end
+
+  def self.invalid_input 
+    "\nPlease select either 'p', 'i', or 'q'!"
   end
 
   def self.place_ship(ship)
