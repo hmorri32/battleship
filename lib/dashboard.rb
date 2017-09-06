@@ -6,7 +6,7 @@ require_relative 'player'
 class DashBoard 
 
   def border
-    '=============='   
+    '==================' 
   end
 
   def format_row(arr)
