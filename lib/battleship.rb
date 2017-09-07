@@ -50,27 +50,30 @@ class BattleShip
       puts "\n You have placed your #{ship.length} unit ship at #{spaces[0]} #{spaces[1]}".colorize(:blue)
     end
   end
+  
+  def do_battle(on_deck, color)
+    space = space_to_fire_on(on_deck['player'])
+    on_deck['player'].shoot(on_deck['board'], space)
+    
+    puts "\nYOU fired upon space #{space}".colorize(color) if on_deck['player'] == player
+    puts "\nCOMPUTER fired upon space #{space}".colorize(color) if on_deck['player'] == computer
+
+    if dash_board.hit?(on_deck['board'], space)
+      puts 'HIT!'.colorize(color)
+      ship_stats(on_deck['board'], on_deck['enemy'], space, color)
+    else 
+      puts 'MISS!'.colorize(color)
+    end
+  end
 
   def game_flow 
     color = ''
-    # TODO refactor all this junk
     loser = false
+    
     until loser
       on_deck = player_firing 
       on_deck['player'] == computer ? color = :red : color = :blue
-      space = space_to_fire_on(on_deck['player'])
-      on_deck['player'].shoot(on_deck['board'], space)
-      
-      puts "\nYOU fired upon space #{space}".colorize(color) if on_deck['player'] == player
-      puts "\nCOMPUTER fired upon space #{space}".colorize(color) if on_deck['player'] == computer
-
-      if dash_board.hit?(on_deck['board'], space)
-        puts 'HIT!'.colorize(color)
-        ship_stats(on_deck['board'], on_deck['enemy'], space, color)
-      else 
-        puts 'MISS!'.colorize(color)
-      end
-      
+      do_battle(on_deck, color)
       puts dash_board.draw(on_deck['board']).colorize(color)
       turn_over(on_deck['player'])
       loser = on_deck['enemy'].loser? || on_deck['player'].loser?
