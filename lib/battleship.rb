@@ -43,78 +43,12 @@ class BattleShip
     puts Messages.computer_has_placed_ships.colorize(:red)
   end
 
-  def valid_computer_placement?(board, ship, spaces)
-    validity = false
-    until validity
-      direction = valid_direction?(spaces)
-      length    = length?(board, ship, spaces)  if direction
-      validity  = overlap?(board, ship, spaces) if length      
-    end
-    return spaces
-  end
-
   def p_ships 
     player.ships.each do |ship|
       spaces = validate_input(ship)
       player.place_ship(player_board, ship, spaces[0], spaces[1])
       puts "\n You have placed your #{ship.length} unit ship at #{spaces[0]} #{spaces[1]}".colorize(:blue)
     end
-  end
-
-  def validate_input(ship)
-    dale = false 
-    until dale 
-      puts Messages.place_ship(ship) + "\n"
-      answer = gets.chomp.upcase.split(" ")
-      dale   = valid_space?(player_board, ship, answer)
-    end
-    return answer
-  end
-
-  def valid_space?(board, ship, answer)
-    validity  = false
-    input     = valid_gets?(board, ship, answer)
-    direction = valid_direction?(answer)      if input
-    length    = length?(board, ship, answer)  if direction
-    validity  = overlap?(board, ship, answer) if length
-    return validity
-  end
-
-  def length?(board, ship, answer)
-    if !valid_length?(board, ship, answer[0], answer[1])
-      puts "\n Error, ship length invalid!".colorize(:red)
-      return false
-    end
-    return true
-  end
-
-  def overlap?(board, ship, answer)
-    if !no_overlap?(board, ship, answer[0], answer[1])
-      puts "\nThat space is already occupied!".colorize(:red)
-      return false
-    end
-    return true
-  end
-
-  def valid_direction?(answer)
-    if !no_diagonals?(answer[0], answer[1])
-      puts "\n Error, No diagonal placement!".colorize(:red)
-      return false
-    end
-    return true
-  end
-
-  def valid_gets?(board, ship, answer)
-    if !two_valid_spaces?(board, answer[0], answer[1])
-      if answer.length < 2 
-        puts "\nError, Please input two spaces".colorize(:red)
-        return false 
-      else 
-        puts "\nError, Space Invalid.".colorize(:red)
-        return false
-      end
-    end
-    return true
   end
 
   def game_flow 
@@ -194,29 +128,6 @@ class BattleShip
     else 
       human_target(player, computer_board)
     end
-  end
-
-  def human_target(player, computer_board, validity = false)
-    return if validity
-    render_board(player, computer_board)
-    puts "\nEnter the space you wish to fire upon. IE: A2\n\n"
-    space = gets.chomp.upcase
-    exit if space == 'Q'
-    validity = validated_space?(computer_board, space)
-    return space if validity
-    human_target(player, computer_board, validity)
-  end
-
-  def validated_space?(computer_board, space) 
-    if !computer_board.space_exists?(space)
-      puts "\nThat space does not exist. Try again.".colorize(:red)
-      return false
-    end
-    if computer_board.fired_on?(space)
-      puts "\nYou have already fired on this space!".colorize(:red)
-      return false
-    end
-    return true
   end
 
   def render_board(player, board)
