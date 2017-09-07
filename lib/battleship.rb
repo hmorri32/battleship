@@ -86,6 +86,12 @@ class BattleShip
     end_min  = end_time.min - @time.min 
     end_sec  = 0
 
+    if end_time.min > @time.min 
+      end_min = end_time.min - @time.min
+    else 
+      end_min = @time.min - end_time.min 
+    end
+
     if end_time.sec > @time.sec 
       end_sec = end_time.sec - @time.sec
     else 
