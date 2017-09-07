@@ -30,7 +30,7 @@ class PlayerTest < Minitest::Test
   end
 
   def test_total_ship_count 
-    assert_equal 2, playa.total_ships 
+    assert_equal 2, playa.ships.length 
   end
 
   def test_playa_can_shoot 
