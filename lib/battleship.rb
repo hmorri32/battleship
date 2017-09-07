@@ -83,7 +83,7 @@ class BattleShip
 
   def game_over 
     end_time = Time.new
-    end_min  = end_time.min - @time.min 
+    end_min  = 0 
     end_sec  = 0
 
     if end_time.min > @time.min 
