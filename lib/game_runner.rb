@@ -1,15 +1,9 @@
-require_relative 'board'
-require_relative 'ship'
-require_relative 'player'
-require_relative 'computer'
-require_relative 'validate'
-require_relative 'BattleShip'
+require_relative 'battleship'
 require_relative 'messages'
 require          'colorize'
 
-
 class GameRunner 
-  # TODO FIGURE OUT HOW LEVELS WORK
+
   def self.welcome
     puts Messages.welcome
     answer = gets.chomp.downcase 
