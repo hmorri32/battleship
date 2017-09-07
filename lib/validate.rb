@@ -34,16 +34,16 @@ module Validate
   end
 
   def validate_input(ship)
-    dale = false 
-    until dale 
+    validity = false 
+    until validity 
       puts Messages.place_ship(ship) + "\n"
-      answer = gets.chomp.upcase.split(" ")
-      dale   = valid_space?(player_board, ship, answer)
+      answer   = gets.chomp.upcase.split(" ")
+      validity = space_valid?(player_board, ship, answer)
     end
     return answer
   end
 
-  def valid_space?(board, ship, answer)
+  def space_valid?(board, ship, answer)
     validity  = false
     input     = valid_gets?(board, ship, answer)
     direction = valid_direction?(answer)      if input
@@ -51,7 +51,6 @@ module Validate
     validity  = overlap?(board, ship, answer) if length
     return validity
   end
-
 
   def valid_computer_placement?(board, ship, spaces)
     validity = false
