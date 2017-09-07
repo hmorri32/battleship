@@ -2,7 +2,9 @@ require_relative 'ship'
 require_relative 'board'
 
 class Player
-  attr_accessor :shot_count, :ship_arr, :ships
+  attr_accessor :shot_count, 
+                :ship_arr, 
+                :ships
 
   def initialize(ship_arr)
     @shot_count = 0
@@ -18,10 +20,6 @@ class Player
 
   def ship_yard 
     @ships = @ship_arr.map {|length| Ship.new(length)}
-  end
-  
-  def total_ships
-    @ships.length
   end
 
   def place_ship(board, ship, bow, stern)
